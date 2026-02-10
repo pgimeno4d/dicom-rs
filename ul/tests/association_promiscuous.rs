@@ -114,9 +114,9 @@ fn scu_scp_association_promiscuous_enabled() {
     assert_eq!(
         association.user_variables(),
         &[
-            UserVariableItem::MaxLength(DEFAULT_MAX_PDU),
             UserVariableItem::ImplementationClassUID(IMPLEMENTATION_CLASS_UID.to_string()),
-            UserVariableItem::ImplementationVersionName(IMPLEMENTATION_VERSION_NAME.to_string())
+            UserVariableItem::ImplementationVersionName(IMPLEMENTATION_VERSION_NAME.to_string()),
+            UserVariableItem::MaxLength(DEFAULT_MAX_PDU),
         ]
     );
     assert_eq!(
@@ -160,9 +160,9 @@ async fn scu_scp_association_promiscuous_enabled_async() {
     assert_eq!(
         association.user_variables(),
         &[
-            UserVariableItem::MaxLength(DEFAULT_MAX_PDU),
             UserVariableItem::ImplementationClassUID(IMPLEMENTATION_CLASS_UID.to_string()),
-            UserVariableItem::ImplementationVersionName(IMPLEMENTATION_VERSION_NAME.to_string())
+            UserVariableItem::ImplementationVersionName(IMPLEMENTATION_VERSION_NAME.to_string()),
+            UserVariableItem::MaxLength(DEFAULT_MAX_PDU),
         ]
     );
     assert_eq!(
