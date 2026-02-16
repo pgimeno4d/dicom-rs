@@ -48,24 +48,6 @@ impl Decode for ExplicitVRBigEndianDecoder {
 
         // retrieve data length
         let len = match vr {
-            VR::OB
-            | VR::OD
-            | VR::OF
-            | VR::OL
-            | VR::OW
-            | VR::SQ
-            | VR::UC
-            | VR::UR
-            | VR::UT
-            | VR::UN => {
-                // read 2 reserved bytes, then 4 bytes for data length
-                source
-                    .read_exact(&mut buf[0..2])
-                    .context(ReadReservedSnafu)?;
-                source.read_exact(&mut buf).context(ReadLengthSnafu)?;
-                bytes_read = 12;
-                BigEndian::read_u32(&buf)
-            }
             // PS3.5 7.1.2:
             // for VRs of AE, AS, AT, CS, DA, DS, DT, FL, FD, IS, LO, LT, PN,
             // SH, SL, SS, ST, TM, UI, UL and US the Value Length Field is the
@@ -107,16 +89,13 @@ impl Decode for ExplicitVRBigEndianDecoder {
             // used or decoded (Table 7.1-1). The Value Length Field is a
             // 32-bit unsigned integer.
             _ => {
-                // read 2 bytes for the reserved field
+                // read 2 reserved bytes, then 4 bytes for data length
                 source
                     .read_exact(&mut buf[0..2])
                     .context(ReadReservedSnafu)?;
-                // read 4 bytes for the data length
-                source
-                    .read_exact(&mut buf[0..4])
-                    .context(ReadItemLengthSnafu)?;
+                source.read_exact(&mut buf).context(ReadLengthSnafu)?;
                 bytes_read = 12;
-                u32::from(BigEndian::read_u32(&buf[0..4]))
+                BigEndian::read_u32(&buf)
             }
         };
 
