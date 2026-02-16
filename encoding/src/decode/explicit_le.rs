@@ -65,11 +65,55 @@ impl Decode for ExplicitVRLittleEndianDecoder {
                 bytes_read = 12;
                 LittleEndian::read_u32(&buf)
             }
-            _ => {
+            // PS3.5 7.1.2:
+            // for VRs of AE, AS, AT, CS, DA, DS, DT, FL, FD, IS, LO, LT, PN,
+            // SH, SL, SS, ST, TM, UI, UL and US the Value Length Field is the
+            // 16-bit unsigned integer following the two byte VR Field (Table
+            // 7.1-2). The value of the Value Length Field shall equal the
+            // length of the Value Field.
+            VR::AE
+            | VR::AS
+            | VR::AT
+            | VR::CS
+            | VR::DA
+            | VR::DS
+            | VR::DT
+            | VR::FL
+            | VR::FD
+            | VR::IS
+            | VR::LO
+            | VR::LT
+            | VR::PN
+            | VR::SH
+            | VR::SL
+            | VR::SS
+            | VR::ST
+            | VR::TM
+            | VR::UI
+            | VR::UL
+            | VR::US => {
                 // read 2 bytes for the data length
                 source.read_exact(&mut buf[0..2]).context(ReadLengthSnafu)?;
                 bytes_read = 8;
                 u32::from(LittleEndian::read_u16(&buf[0..2]))
+            }
+            // PS3.5 7.1.2:
+            // for all other VRs the 16 bits following the two byte VR Field
+            // are reserved for use by later versions of the DICOM Standard.
+            // These reserved bytes shall be set to 0000H and shall not be
+            // used or decoded (Table 7.1-1). The Value Length Field is a
+            // 32-bit unsigned integer.
+            _ => {
+                // read 2 bytes for the reserved field
+                source
+                    .read_exact(&mut buf[0..2])
+                    .context(ReadReservedSnafu)?;
+                // read 4 bytes for the data length
+                source
+                    .read_exact(&mut buf[0..4])
+                    .context(ReadItemLengthSnafu)?;
+                bytes_read = 12;
+                u32::from(LittleEndian::read_u32(&buf[0..4]))
             }
         };
 
