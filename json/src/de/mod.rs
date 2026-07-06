@@ -471,7 +471,7 @@ mod tests {
                     "Alphabetic": "^Bob^^Dr.",
                   },
                   {
-                    "Ideographic": "\u{6708}\u{91ce}^\u{3046}\u{3055}\u{304e}",
+                    "Ideographic": "月野^うさぎ",
                   }
                 ]
             },

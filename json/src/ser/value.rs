@@ -292,16 +292,10 @@ mod tests {
             Strs,
             [
                 "House^Gregory^^M.D.",
-                "Wang^XiaoDong=\u{738b}^\u{5c0f}\u{4e1c}=",
-                "Orl\u{e9}ans de Gallia^Charlotte^H\u{e9}l\u{e8}ne==\
-                \u{30aa}\u{30eb}\u{30ec}\u{30a2}\u{30f3}\u{30fb}\u{30c7}\
-                \u{30fb}\u{30ac}\u{30fc}\u{30ea}\u{30e4}^\u{30b7}\u{30e3}\
-                \u{30eb}\u{30ed}\u{30c3}\u{30c8}^\u{30a8}\u{30ec}\u{30fc}\u{30cc}",
-                "=\u{559c}\u{591a}\u{5ddd}^\u{6d77}\u{5922}=\u{30ad}\u{30bf}\
-                \u{30ac}\u{30ef}^\u{30de}\u{30ea}\u{30f3}",
-                "Mashiro^Moritaka^^^San=\u{771f}\u{57ce}^\u{6700}\u{9ad8}^^^\
-                \u{3055}\u{3093}=\u{30de}\u{30b7}\u{30ed}^\u{30e2}\u{30ea}\
-                \u{30bf}\u{30ab}^^^\u{3055}\u{3093}",
+                "Wang^XiaoDong=王^小东=",
+                "Orléans de Gallia^Charlotte^Hélène==オルレアン・デ・ガーリヤ^シャルロット^エレーヌ",
+                "=喜多川^海夢=キタガワ^マリン",
+                "Mashiro^Moritaka^^^San=真城^最高^^^さん=マシロ^モリタカ^^^さん"
             ]
         );
         let json = serde_json::to_value(AsPersonNames(&v)).unwrap();
@@ -313,23 +307,20 @@ mod tests {
                 },
                 {
                     "Alphabetic": "Wang^XiaoDong",
-                    "Ideographic": "\u{738b}^\u{5c0f}\u{4e1c}",
+                    "Ideographic": "王^小东",
                 },
                 {
-                    "Alphabetic": "Orl\u{e9}ans de Gallia^Charlotte^H\u{e9}l\u{e8}ne",
-                    "Phonetic": "\u{30aa}\u{30eb}\u{30ec}\u{30a2}\u{30f3}\u{30fb}\u{30c7}\
-                    \u{30fb}\u{30ac}\u{30fc}\u{30ea}\u{30e4}^\u{30b7}\u{30e3}\
-                    \u{30eb}\u{30ed}\u{30c3}\u{30c8}^\u{30a8}\u{30ec}\u{30fc}\u{30cc}",
+                    "Alphabetic": "Orléans de Gallia^Charlotte^Hélène",
+                    "Phonetic": "オルレアン・デ・ガーリヤ^シャルロット^エレーヌ",
                 },
                 {
-                    "Ideographic": "\u{559c}\u{591a}\u{5ddd}^\u{6d77}\u{5922}",
-                    "Phonetic": "\u{30ad}\u{30bf}\u{30ac}\u{30ef}^\u{30de}\u{30ea}\u{30f3}",
+                    "Ideographic": "喜多川^海夢",
+                    "Phonetic": "キタガワ^マリン",
                 },
                 {
                     "Alphabetic": "Mashiro^Moritaka^^^San",
-                    "Ideographic": "\u{771f}\u{57ce}^\u{6700}\u{9ad8}^^^\u{3055}\u{3093}",
-                    "Phonetic": "\u{30de}\u{30b7}\u{30ed}^\u{30e2}\u{30ea}\u{30bf}\u{30ab}^^^\
-                    \u{3055}\u{3093}",
+                    "Ideographic": "真城^最高^^^さん",
+                    "Phonetic": "マシロ^モリタカ^^^さん",
                 },
             ])
         );
